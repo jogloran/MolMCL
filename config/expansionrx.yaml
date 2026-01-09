@@ -1,0 +1,50 @@
+batch_size: 32
+epochs: 100
+device: cuda
+seed: 42
+num_run: 1
+verbose: True
+
+model:
+  backbone: gps
+  num_layer: 5
+  emb_dim: 300
+  heads: 6
+  layernorm: True
+  dropout_ratio: 0
+  attn_dropout_ratio: 0.3
+  temperature: 0.5
+  use_prompt: True
+  normalize: False
+  checkpoint: ./checkpoint/zinc-gps_best.pt
+
+optim:
+  prompt_lr: 0.0005
+  pretrain_lr: 0.0005
+  finetune_lr: 0.001
+  decay: 1e-6
+  gradient_clip: 5
+  scheduler: cos_anneal
+
+prompt_optim:
+  skip_bo: True
+  inits: null
+
+dataset:
+  data_dir: ./data/finetune/expansionrx
+  data_name: expansionrx
+  num_workers: 0
+  feat_type: super_rich
+  task: regression
+  targets:
+    - MPPB
+    - MBPB
+    - MGMB
+    - KSOL
+    - HLM_CLint
+    - MLM_CLint
+    - Caco2_Papp
+    - Caco2_Efflux
+    - LogD
+
+
